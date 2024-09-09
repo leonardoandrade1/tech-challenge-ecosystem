@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PaymentMethod } from '../enums';
+import { Card } from './value-objects';
 
 @Entity('Transaction')
 export class MerchantTransaction {
@@ -25,4 +26,7 @@ export class MerchantTransaction {
 
   @Column()
   amount: number;
+
+  @Column(() => Card, { prefix: true })
+  card: Card;
 }
