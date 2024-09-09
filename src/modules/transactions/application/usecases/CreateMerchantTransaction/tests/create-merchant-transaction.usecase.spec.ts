@@ -1,25 +1,8 @@
 import { createMock } from '@golevelup/ts-jest';
 import { MerchantTransactionRepository } from 'src/modules/transactions/infra/repositories/merchant-transaction.repository';
-import {
-  CreateMerchantTransactionParams,
-  CreateMerchantTransactionUseCase,
-} from '../create-merchant-transaction.usecase';
 import { MerchantTransaction } from 'src/shared/domain/models';
-import { PaymentMethod } from 'src/shared/domain/enums';
-
-function generateCreateTransactionParams(params?: any) {
-  const dto: CreateMerchantTransactionParams = {
-    merchantId: params?.merchantId ?? '1001',
-    description: params?.description ?? 'T-Shirt Black/M',
-    paymentMethod: params?.paymentMethod ?? PaymentMethod.DebitCard,
-    amount: params?.amount ?? 50,
-    cardNumber: params?.cardNumber ?? '5468794910773649',
-    cardHolder: params?.cardHolder ?? 'card holder name',
-    cardExpirationDate: params?.cardExpirationDate ?? '04/2026',
-    cvv: params?.cvv ?? '759',
-  };
-  return dto;
-}
+import { CreateMerchantTransactionUseCase } from '../create-merchant-transaction.usecase';
+import { generateCreateTransactionParams } from 'test/utils/generate-create-transaction-params';
 
 describe('CreateMerchantTransactionUseCase', () => {
   let usecase: CreateMerchantTransactionUseCase;
