@@ -3,6 +3,7 @@ import { TransactionsController } from './transactions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MerchantTransaction } from 'src/shared/domain/models';
 import { MerchantTransactionRepository } from './infra/repositories/merchant-transaction.repository';
+import { CreateMerchantTransactionUseCase } from './application/usecases/CreateMerchantTransaction/create-merchant-transaction.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([MerchantTransaction])],
@@ -10,6 +11,8 @@ import { MerchantTransactionRepository } from './infra/repositories/merchant-tra
   providers: [
     //repositories
     MerchantTransactionRepository,
+    //usecases
+    CreateMerchantTransactionUseCase,
   ],
 })
 export class TransactionsModule {}
