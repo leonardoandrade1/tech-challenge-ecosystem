@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotAcceptableException } from '@nestjs/common';
 import { PaymentMethod } from '../../enums';
 import { MerchantPayable } from '../merchant-payable.model';
 
@@ -56,6 +56,50 @@ describe('MerchantPayable', () => {
 
     afterAll(() => {
       jest.useRealTimers();
+    });
+
+    it('should throw BadRequestException when trying to calculate transaction with no paymentMethod provided', () => {
+      const params = {
+        merchantId: '123',
+        transactionId: 1,
+        transactionDate: fakeDate,
+        amount: 100,
+        paymentMethod: undefined,
+      };
+
+      const payable = MerchantPayable.NewFromTransaction(
+        params.merchantId,
+        params.transactionId,
+      );
+      expect(() =>
+        payable.calculateTransaction(
+          params.paymentMethod,
+          params.amount,
+          params.transactionDate,
+        ),
+      ).toThrow(BadRequestException);
+    });
+
+    it('should throw NotAcceptableException when trying to calculate transaction with unknown paymentMethod', () => {
+      const params = {
+        merchantId: '123',
+        transactionId: 1,
+        transactionDate: fakeDate,
+        amount: 100,
+        paymentMethod: 'undefined' as PaymentMethod,
+      };
+
+      const payable = MerchantPayable.NewFromTransaction(
+        params.merchantId,
+        params.transactionId,
+      );
+      expect(() =>
+        payable.calculateTransaction(
+          params.paymentMethod,
+          params.amount,
+          params.transactionDate,
+        ),
+      ).toThrow(NotAcceptableException);
     });
 
     it('should throw BadRequestException when trying to calculate transaction with negative or zero amount', () => {

@@ -60,6 +60,10 @@ export class MerchantPayable {
     amount: number,
     transactionDate: Date,
   ): void {
+    if (!paymentMethod)
+      throw new BadRequestException(
+        'cannot calculate transaction without payment method',
+      );
     if (amount <= 0)
       throw new BadRequestException(
         'only positive values are accepted to calculate payable',
