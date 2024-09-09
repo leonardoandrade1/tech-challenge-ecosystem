@@ -6,6 +6,7 @@ import {
 } from 'typeorm';
 import { ColumnNumericTransformer } from '../utils/column-numeric-transformer.typeorm';
 import { PayableStatus } from '../enums';
+import { BadRequestException } from '@nestjs/common';
 
 @Entity('Payable')
 export class MerchantPayable {
@@ -32,4 +33,21 @@ export class MerchantPayable {
 
   @Column({ type: 'decimal', transformer: new ColumnNumericTransformer() })
   total: number;
+
+  public static NewFromTransaction(
+    merchantId: string,
+    transactionId: number,
+  ): MerchantPayable {
+    if (!merchantId)
+      throw new BadRequestException('cannot create payable with no merchantId');
+    if (!transactionId)
+      throw new BadRequestException(
+        'cannot create payable with no transactionId',
+      );
+
+    const model = new MerchantPayable();
+    model.merchantId = merchantId;
+    model.transactionId = transactionId;
+    return model;
+  }
 }
