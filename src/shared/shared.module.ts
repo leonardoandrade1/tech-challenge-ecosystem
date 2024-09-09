@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MerchantTransaction } from './domain/models';
+import { MerchantPayable, MerchantTransaction } from './domain/models';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { MerchantTransaction } from './domain/models';
           password: configService.get('ORM_PASSWORD'),
           database: configService.get('ORM_DBNAME'),
           autoLoadEntities: true,
-          entities: [MerchantTransaction],
+          entities: [MerchantTransaction, MerchantPayable],
           synchronize: true,
         };
       },
