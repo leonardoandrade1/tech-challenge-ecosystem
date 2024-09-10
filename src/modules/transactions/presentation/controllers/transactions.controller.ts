@@ -1,10 +1,19 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Headers,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import {
   CommandNames,
   CreateTransactionCommand,
 } from 'src/shared/events/commands';
 import { CreateTransactionDto } from './dtos/create-transaction.dto';
+import { createHash } from 'node:crypto';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -12,12 +21,19 @@ export class TransactionsController {
 
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  async createTransaction(@Body() body: CreateTransactionDto) {
+  async createTransaction(
+    @Headers('x-idempotency-key') idempotencyKey: string,
+    @Body() body: CreateTransactionDto,
+  ) {
+    // TODO: add validation
+    if (!idempotencyKey)
+      throw new BadRequestException('x-idempotency-key is required');
+    const transactionHash = this.generateRequestHash(idempotencyKey, body);
     this.eventEmitter.emit(
       CommandNames.MerchantTransactionCreateRequest,
       new CreateTransactionCommand(
-        undefined,
-        undefined,
+        idempotencyKey,
+        transactionHash,
         body.merchantId,
         body.description,
         body.paymentMethod,
@@ -30,5 +46,16 @@ export class TransactionsController {
         },
       ),
     );
+    return {
+      transactionHash,
+    };
+  }
+
+  private generateRequestHash(idempotencyKey: string, body: any): string {
+    const hashValue = {
+      idempotencyKey,
+      ...body,
+    };
+    return createHash('sha256').update(JSON.stringify(hashValue)).digest('hex');
   }
 }
