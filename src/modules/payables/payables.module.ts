@@ -3,6 +3,7 @@ import { PayablesController } from './payables.controller';
 import { MerchantPayable } from 'src/shared/domain/models';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MerchantPayableRepository } from './infra/repositories/merchant-payable.repository';
+import { CreatePayableFromTransactionUseCase } from './application/usecases/create-payable-from-transaction.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([MerchantPayable])],
@@ -10,6 +11,8 @@ import { MerchantPayableRepository } from './infra/repositories/merchant-payable
   providers: [
     //repositories
     MerchantPayableRepository,
+    //usecases
+    CreatePayableFromTransactionUseCase,
   ],
 })
 export class PayablesModule {}
