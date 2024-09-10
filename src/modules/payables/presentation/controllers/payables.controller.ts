@@ -13,10 +13,13 @@ export class PayablesController {
     @Query('startDate') startDate: Date,
     @Query('endDate') endDate: Date,
   ): Promise<any> {
+    const defaultEndDate = new Date();
+    defaultEndDate.setDate(defaultEndDate.getDate() + 31);
+
     return this.fetchPayableByRange.execute({
       merchantId,
-      startDate,
-      endDate,
+      startDate: startDate ?? new Date(),
+      endDate: endDate ?? defaultEndDate,
     });
   }
 }
