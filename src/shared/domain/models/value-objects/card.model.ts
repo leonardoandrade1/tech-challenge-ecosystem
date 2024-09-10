@@ -38,7 +38,7 @@ export class Card {
         'cannot create card with no provider card cvv',
       );
     const card = new Card();
-    card.numeration = cardNumber;
+    card.numeration = cardNumber.substring(cardNumber.length - 4);
     card.holder = cardHolder;
     card.expirationDate = cardExpirationDate;
     card.cvv = cvv;

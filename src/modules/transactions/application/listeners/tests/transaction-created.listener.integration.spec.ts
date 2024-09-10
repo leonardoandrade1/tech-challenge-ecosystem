@@ -77,7 +77,9 @@ describe('[INTEGRATION] TransactionCreatedListener', () => {
       expect(transaction).toBeInstanceOf(MerchantTransaction);
       expect(transaction.merchantId).toEqual(params.merchantId);
       expect(transaction.amount).toEqual(params.amount);
-      expect(transaction.card.numeration).toEqual(params.cardNumber);
+      expect(transaction.card.numeration).toEqual(
+        params.cardNumber.substring(params.cardNumber.length - 4),
+      );
     });
   });
 });

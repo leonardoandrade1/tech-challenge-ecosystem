@@ -75,5 +75,23 @@ describe('CardModel', () => {
         ),
       ).toBeInstanceOf(Card);
     });
+    it('should create card successfully and save only last for digits of card numeration', () => {
+      const params = {
+        numeration: '5105105105105100',
+        holder: 'unit test',
+        expDate: '09/2024',
+        cvv: '111',
+      };
+      const lastDigits = params.numeration.substring(
+        params.numeration.length - 4,
+      );
+      const card = Card.Create(
+        params.numeration,
+        params.holder,
+        params.expDate,
+        params.cvv,
+      );
+      expect(card.numeration).toEqual(lastDigits);
+    });
   });
 });

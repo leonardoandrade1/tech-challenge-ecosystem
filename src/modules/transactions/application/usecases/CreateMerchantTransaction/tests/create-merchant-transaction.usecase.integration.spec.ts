@@ -55,7 +55,9 @@ describe('[INTEGRATION] CreateMerchantTransactionUseCase', () => {
       );
       expect(merchantTransaction.paymentMethod).toEqual(params.paymentMethod);
       expect(merchantTransaction.amount).toEqual(params.amount);
-      expect(merchantTransaction.card.numeration).toEqual(params.cardNumber);
+      expect(merchantTransaction.card.numeration).toEqual(
+        params.cardNumber.substring(params.cardNumber.length - 4),
+      );
     });
     it('ensure merchant transaction with credit card is being saved correctly', async () => {
       const params = generateCreateTransactionParams({
@@ -77,7 +79,9 @@ describe('[INTEGRATION] CreateMerchantTransactionUseCase', () => {
       );
       expect(merchantTransaction.paymentMethod).toEqual(params.paymentMethod);
       expect(merchantTransaction.amount).toEqual(params.amount);
-      expect(merchantTransaction.card.numeration).toEqual(params.cardNumber);
+      expect(merchantTransaction.card.numeration).toEqual(
+        params.cardNumber.substring(params.cardNumber.length - 4),
+      );
     });
   });
 });
