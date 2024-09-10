@@ -6,6 +6,7 @@ import { MerchantTransactionRepository } from 'src/modules/transactions/infra/re
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { generateCreateTransactionParams } from 'test/utils/generate-create-transaction-params';
 import { PaymentMethod } from 'src/shared/domain/enums';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 describe('[INTEGRATION] CreateMerchantTransactionUseCase', () => {
   let usecase: CreateMerchantTransactionUseCase;
@@ -14,6 +15,7 @@ describe('[INTEGRATION] CreateMerchantTransactionUseCase', () => {
   beforeEach(async () => {
     const module = await Test.createTestingModule({
       imports: [
+        EventEmitterModule.forRoot(),
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: ':memory:',

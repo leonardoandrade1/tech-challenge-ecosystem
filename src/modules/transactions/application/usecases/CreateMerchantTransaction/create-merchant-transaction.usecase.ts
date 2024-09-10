@@ -2,6 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { MerchantTransactionRepository } from '../../../infra/repositories/merchant-transaction.repository';
 import { PaymentMethod } from 'src/shared/domain/enums';
 import { Card, MerchantTransaction } from 'src/shared/domain/models';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import {
+  NotificationNames,
+  TransactionCreatedNotification,
+} from 'src/shared/events/notifications';
 
 export interface CreateMerchantTransactionParams {
   merchantId: string;
@@ -18,6 +23,7 @@ export interface CreateMerchantTransactionParams {
 export class CreateMerchantTransactionUseCase {
   constructor(
     private readonly merchantTransactionRepository: MerchantTransactionRepository,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async execute(params: CreateMerchantTransactionParams): Promise<number> {
@@ -35,6 +41,13 @@ export class CreateMerchantTransactionUseCase {
         params.amount,
         card,
       ),
+    );
+    const transactionCreated = new TransactionCreatedNotification(
+      merchantTransaction,
+    );
+    this.eventEmitter.emit(
+      NotificationNames.MerchantTransactionCreated,
+      transactionCreated,
     );
     return merchantTransaction.id;
   }
