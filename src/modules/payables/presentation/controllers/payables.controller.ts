@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseInterceptors } from '@nestjs/common';
 import { FetchMerchantePayableByRangeUseCase } from '../../application/usecases/FetchMerchantPayableByDateRange/fetch-merchant-payable-by-range.usecase';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('payables')
 export class PayablesController {
@@ -8,6 +9,8 @@ export class PayablesController {
   ) {}
 
   @Get('/merchant/:merchantId')
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(30000)
   async fetchPayablesByMerchantAndRange(
     @Param('merchantId') merchantId: string,
     @Query('startDate') startDate: Date,
