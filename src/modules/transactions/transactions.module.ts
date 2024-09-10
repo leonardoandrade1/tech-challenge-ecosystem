@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MerchantTransaction } from 'src/shared/domain/models';
 import { MerchantTransactionRepository } from './infra/repositories/merchant-transaction.repository';
 import { CreateMerchantTransactionUseCase } from './application/usecases/CreateMerchantTransaction/create-merchant-transaction.usecase';
+import { CreateTransactionListener } from './application/listeners/create-transaction.listener';
 
 @Module({
   imports: [TypeOrmModule.forFeature([MerchantTransaction])],
@@ -13,6 +14,8 @@ import { CreateMerchantTransactionUseCase } from './application/usecases/CreateM
     MerchantTransactionRepository,
     //usecases
     CreateMerchantTransactionUseCase,
+    // listeners
+    CreateTransactionListener,
   ],
 })
 export class TransactionsModule {}

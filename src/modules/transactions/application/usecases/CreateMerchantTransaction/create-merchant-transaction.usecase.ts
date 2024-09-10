@@ -10,6 +10,8 @@ import {
 
 export interface CreateMerchantTransactionParams {
   merchantId: string;
+  idempotencyKey: string;
+  transactionHash: string;
   description: string;
   paymentMethod: PaymentMethod;
   amount: number;
@@ -36,6 +38,8 @@ export class CreateMerchantTransactionUseCase {
     const merchantTransaction = await this.merchantTransactionRepository.save(
       MerchantTransaction.New(
         params.merchantId,
+        params.idempotencyKey,
+        params.transactionHash,
         params.description,
         params.paymentMethod,
         params.amount,

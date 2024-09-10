@@ -4,6 +4,8 @@ import { PaymentMethod } from 'src/shared/domain/enums';
 export function generateCreateTransactionParams(params?: any) {
   const dto: CreateMerchantTransactionParams = {
     merchantId: params?.merchantId ?? '1001',
+    idempotencyKey: params?.idempotencyKey ?? 'idempotency123',
+    transactionHash: params?.transactionHash ?? 'hash123',
     description: params?.description ?? 'T-Shirt Black/M',
     paymentMethod: params?.paymentMethod ?? PaymentMethod.DebitCard,
     amount: params?.amount ?? 50,

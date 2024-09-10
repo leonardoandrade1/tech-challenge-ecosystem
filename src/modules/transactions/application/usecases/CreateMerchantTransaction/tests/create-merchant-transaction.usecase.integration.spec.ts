@@ -49,6 +49,10 @@ describe('[INTEGRATION] CreateMerchantTransactionUseCase', () => {
       expect(merchantTransaction).toBeDefined();
       expect(merchantTransaction).toBeInstanceOf(MerchantTransaction);
       expect(merchantTransaction.merchantId).toEqual(params.merchantId);
+      expect(merchantTransaction.idempotencyKey).toEqual(params.idempotencyKey);
+      expect(merchantTransaction.transactionHash).toEqual(
+        params.transactionHash,
+      );
       expect(merchantTransaction.paymentMethod).toEqual(params.paymentMethod);
       expect(merchantTransaction.amount).toEqual(params.amount);
       expect(merchantTransaction.card.numeration).toEqual(params.cardNumber);
@@ -67,6 +71,10 @@ describe('[INTEGRATION] CreateMerchantTransactionUseCase', () => {
       expect(merchantTransaction).toBeDefined();
       expect(merchantTransaction).toBeInstanceOf(MerchantTransaction);
       expect(merchantTransaction.merchantId).toEqual(params.merchantId);
+      expect(merchantTransaction.idempotencyKey).toEqual(params.idempotencyKey);
+      expect(merchantTransaction.transactionHash).toEqual(
+        params.transactionHash,
+      );
       expect(merchantTransaction.paymentMethod).toEqual(params.paymentMethod);
       expect(merchantTransaction.amount).toEqual(params.amount);
       expect(merchantTransaction.card.numeration).toEqual(params.cardNumber);

@@ -16,6 +16,8 @@ describe('MerchantTransaction', () => {
       {
         params: {
           merchantId: undefined,
+          idempotencyKey: 'idempotency123',
+          transactionHash: 'hash123',
           descripion: 'unit test',
           paymentMethod: PaymentMethod.DebitCard,
           amount: 100,
@@ -28,6 +30,36 @@ describe('MerchantTransaction', () => {
       {
         params: {
           merchantId: '123',
+          idempotencyKey: undefined,
+          transactionHash: 'hash123',
+          descripion: 'unit test',
+          paymentMethod: PaymentMethod.DebitCard,
+          amount: 100,
+          card: cardMock,
+        },
+        message:
+          'should return BadRequestException when trying to create a Transaction with no idempotencyKey',
+        expectedError: BadRequestException,
+      },
+      {
+        params: {
+          merchantId: '123',
+          idempotencyKey: 'idempotency123',
+          transactionHash: undefined,
+          descripion: 'unit test',
+          paymentMethod: PaymentMethod.DebitCard,
+          amount: 100,
+          card: cardMock,
+        },
+        message:
+          'should return BadRequestException when trying to create a Transaction with no transactionHash',
+        expectedError: BadRequestException,
+      },
+      {
+        params: {
+          merchantId: '123',
+          idempotencyKey: 'idempotency123',
+          transactionHash: 'hash123',
           descripion: undefined,
           paymentMethod: PaymentMethod.DebitCard,
           amount: 100,
@@ -40,6 +72,8 @@ describe('MerchantTransaction', () => {
       {
         params: {
           merchantId: '123',
+          idempotencyKey: 'idempotency123',
+          transactionHash: 'hash123',
           descripion: 'unit test',
           paymentMethod: undefined,
           amount: 100,
@@ -52,6 +86,8 @@ describe('MerchantTransaction', () => {
       {
         params: {
           merchantId: '123',
+          idempotencyKey: 'idempotency123',
+          transactionHash: 'hash123',
           descripion: 'unit test',
           paymentMethod: PaymentMethod.DebitCard,
           amount: 0,
@@ -64,6 +100,8 @@ describe('MerchantTransaction', () => {
       {
         params: {
           merchantId: '123',
+          idempotencyKey: 'idempotency123',
+          transactionHash: 'hash123',
           descripion: 'unit test',
           paymentMethod: PaymentMethod.DebitCard,
           amount: -1,
@@ -76,6 +114,8 @@ describe('MerchantTransaction', () => {
       {
         params: {
           merchantId: '123',
+          idempotencyKey: 'idempotency123',
+          transactionHash: 'hash123',
           descripion: 'unit test',
           paymentMethod: PaymentMethod.DebitCard,
           amount: 100,
@@ -90,6 +130,8 @@ describe('MerchantTransaction', () => {
       expect(() =>
         MerchantTransaction.New(
           params.merchantId,
+          params.idempotencyKey,
+          params.transactionHash,
           params.descripion,
           params.paymentMethod,
           params.amount,
@@ -100,6 +142,8 @@ describe('MerchantTransaction', () => {
     it('should create transaction successfully', () => {
       const params = {
         merchantId: '123',
+        idempotencyKey: 'idempotency123',
+        transactionHash: 'hash123',
         descripion: 'unit test',
         paymentMethod: PaymentMethod.DebitCard,
         amount: 100,
@@ -108,6 +152,8 @@ describe('MerchantTransaction', () => {
       expect(
         MerchantTransaction.New(
           params.merchantId,
+          params.idempotencyKey,
+          params.transactionHash,
           params.descripion,
           params.paymentMethod,
           params.amount,
