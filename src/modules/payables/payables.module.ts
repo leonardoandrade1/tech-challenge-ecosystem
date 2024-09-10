@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PayablesController } from './payables.controller';
+import { PayablesController } from './presentation/controllers/payables.controller';
 import { MerchantPayable } from 'src/shared/domain/models';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MerchantPayableRepository } from './infra/repositories/merchant-payable.repository';
