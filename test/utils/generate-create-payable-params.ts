@@ -1,4 +1,4 @@
-import { CreatePayableParams } from 'src/modules/payables/application/usecases/create-payable-from-transaction.usecase';
+import { CreatePayableParams } from 'src/modules/payables/application/usecases/CreatePayableFromTransaction/create-payable-from-transaction.usecase';
 import { PaymentMethod } from 'src/shared/domain/enums';
 
 export function generateCreatePayableParams(params?: any) {

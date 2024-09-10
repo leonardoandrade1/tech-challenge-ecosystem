@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePayableFromTransactionUseCase } from '../usecases/create-payable-from-transaction.usecase';
+import { CreatePayableFromTransactionUseCase } from '../usecases/CreatePayableFromTransaction/create-payable-from-transaction.usecase';
 import { OnEvent } from '@nestjs/event-emitter';
 import {
   NotificationNames,

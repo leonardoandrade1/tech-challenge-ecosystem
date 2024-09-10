@@ -7,7 +7,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PaymentMethod } from 'src/shared/domain/enums';
 import { TransactionCreatedNotification } from 'src/shared/events/notifications';
-import { CreatePayableFromTransactionUseCase } from '../../usecases/create-payable-from-transaction.usecase';
+import { CreatePayableFromTransactionUseCase } from '../../usecases/CreatePayableFromTransaction/create-payable-from-transaction.usecase';
 import { MerchantPayableRepository } from 'src/modules/payables/infra/repositories/merchant-payable.repository';
 
 describe('[INTEGRATION] TransactionCreatedListener', () => {

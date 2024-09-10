@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PaymentMethod } from 'src/shared/domain/enums';
 import { MerchantPayable } from 'src/shared/domain/models';
-import { MerchantPayableRepository } from '../../infra/repositories/merchant-payable.repository';
+import { MerchantPayableRepository } from '../../../infra/repositories/merchant-payable.repository';
 
 export interface CreatePayableParams {
   transactionId: number;
